@@ -2,6 +2,17 @@ import requests, re, json, os, csv
 from flask import flash
 from pymongo import MongoClient
 
+def getCityList(state=None):
+    cityList=[]
+    client = MongoClient()
+    db = client.dc
+    acc = db.locality
+    if not state:
+        cityList = acc.distinct('city')
+    client.close()
+    cityList=list(set(cityList))
+    return cityList
+
 def latlngexists(strng):
     latlngr = re.compile('[0-9]+[.][0-9]+[,]?[ ]+[0-9]+[.][0-9]+')
     latlng = re.findall(latlngr,strng)
@@ -86,16 +97,6 @@ def getCityCord(city):
         pointy.append(temp)
     return json.dumps(pointy)
 
-def getCityList():
-    cityList=[]
-    client = MongoClient()
-    db = client.addcol
-    acc = db.addDumps
-    for a in acc.find({'address_components':{'$elemMatch':{'types':"locality"}}},{'_id':0,'address_components':{'$elemMatch':{'types':"locality"}},'address_components.long_name':1,'address_components.short_name':1}):
-        cityList.append(a['address_components'][0]['long_name'])
-    client.close()
-    cityList=list(set(cityList))
-    return cityList
 
 def convertJson(dic):
     return json.dumps(dic)

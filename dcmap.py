@@ -6,7 +6,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('dcmapping.html')
+    cities = helper.getCityList()
+    cities.sort()
+    return render_template('dcmapping.html',cities=cities)
+
+@app.route('/city_dc')
+def getCity():
+    return redirect(url_for('index'))
 
 if __name__ == "__main__":
     app.debug = True
