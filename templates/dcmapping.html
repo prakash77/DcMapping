@@ -4,9 +4,9 @@
 <div onload="initMap()" class="row">
   <div class="row">
     <div class="col-md-6">
-      <form role="form" id="get_city" action="{{ url_for('getCity') }}">
+      <form role="form" id="city_select" action="{{ url_for('get_dc') }}" method= post >
         <div class="form-group">
-           <select class="form-control" id="cities">
+           <select class="form-control" id="city" name="city">
             <option disabled selected>Select City</option>
             {% for city in cities %}
               <option>{{ city }}</option>
@@ -15,7 +15,13 @@
         </div>
       </form>
     </div>
-    <div class="col-md-6"></div>
+    <div class="col-md-6">
+      <form role="form" id="dc_search" name="dc_search" action="">
+        <div class="form-group">
+           <input type="text" class="form-control" id="dc">
+        </div>
+      </form>
+    </div>
   </div>
   <div id="gmap" class="gmaps"></div>
 </div>

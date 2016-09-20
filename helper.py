@@ -10,8 +10,19 @@ def getCityList(state=None):
     if not state:
         cityList = acc.distinct('city')
     client.close()
-    cityList=list(set(cityList))
     return cityList
+
+def getDcData(city):
+    dcData=[]
+    client = MongoClient()
+    db = client.dc
+    acc = db.locality
+    for a in acc.find({'city':city}):
+        dcData.append(a)
+    client.close()
+    dcData = json.dumps(dcData)
+    return dcData
+
 
 def latlngexists(strng):
     latlngr = re.compile('[0-9]+[.][0-9]+[,]?[ ]+[0-9]+[.][0-9]+')

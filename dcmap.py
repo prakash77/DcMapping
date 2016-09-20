@@ -10,9 +10,11 @@ def index():
     cities.sort()
     return render_template('dcmapping.html',cities=cities)
 
-@app.route('/city_dc')
-def getCity():
-    return redirect(url_for('index'))
+@app.route('/city_dc',methods=['POST'])
+def get_dc():
+    city = request.get_data()
+    dc_data = helper.getDcData(city)
+    return dc_data
 
 if __name__ == "__main__":
     app.debug = True
