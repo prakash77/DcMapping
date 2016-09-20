@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <!-- Defining the code page of the document -->
+	<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+
+  <!-- Dynamic width of the page -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Adding title icon -->
+  <link rel="shortcut icon" href="{{ url_for('static',filename = 'images/favicon.ico') }}">
+  <title>DC Map</title>
+  
+  <!-- Including jquery -->
+  <script type="text/javascript" src="{{ url_for('static',filename = 'js/jquery.min.js') }}" ></script>
+
+  <!-- Including bootstrap files -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename = 'css/bootstrap.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename = 'css/bootstrap-theme.min.css') }}">
+  <script type="text/javascript" src="{{ url_for('static',filename = 'js/bootstrap.min.js') }}" ></script>
+
+  <!-- Including dataTable files -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename = 'css/data-tables.min.css') }}">
+  <script type="text/javascript" src="{{ url_for('static',filename = 'js/data-tables.min.js') }}" ></script>
+
+  <!-- Including dcmap styling and scripts -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename = 'css/dcmap.css') }}">
+  <script type="text/javascript" src="{{ url_for('static',filename = 'js/dcmap.js') }}" ></script>
+
+</head>
+
+<body  class="bg-grey">
+
+<!-- Show flashed messages -->
+<div id="flashMessages">
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div id="nameAlert" class="alert alert-{{ category }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>{{category}}: </strong> {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+</div>
+
+<!-- navigation bar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navy">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button>
+      <a class="navbar-brand" href="{{ url_for('index') }}"><span><img class="img-circle logo-margin" src="{{ url_for('static',filename = 'images/logo.png') }}"></span><strong>DC MAP</strong></a>
+    </div>
+    <div class="collapse navbar-collapse" id="navy">
+      <ul class="nav navbar-nav navbar-right">
+      </ul>
+    </div>
+  </div> 
+</nav>
+
+<div class="container-fluid">
+  {% block body %} {% endblock %}
+</div>
+
+<footer class="container-fluid footer text-center">
+  <p><small> <a href="mailto:antriksh.singh@delhivery.com">FEEDBACK</a> | DC MAP v 0.1 | COPYRIGHT © DELHIVERY PVT. LTD</small></p> 
+</footer>
+</body>
+</html>
