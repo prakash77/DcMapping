@@ -13,7 +13,7 @@ def index():
 @app.route('/city_dc',methods=['POST'])
 def get_dc():
     city = request.get_data()
-    dc_data = helper.getDcData(city)
+    dc_data = helper.getLocDCData(city)
     return dc_data
 
 if __name__ == "__main__":

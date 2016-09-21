@@ -24,9 +24,27 @@ def getDcData(city):
         for a in acc.find({'city':re.compile(r'^'+city+'$',re.IGNORECASE)}):
             dcData.append(a)
     client.close()
-    dcData = json.dumps(dcData)
     return dcData
 
+def getCityData(city):
+    cityData=[]
+    client = MongoClient()
+    db = client.dc
+    acc = db.locality
+    if city == 'all cities':
+        for a in acc.find({}):
+            cityData.append(a)
+    else:
+        for a in acc.find({'city':city}):
+            cityData.append(a)
+    client.close()
+    return cityData
+
+def getLocDCData(city):
+    result = list()
+    result.append(getDcData(city))
+    result.append(getCityData(city))
+    return json.dumps(result)
 
 def latlngexists(strng):
     latlngr = re.compile('[0-9]+[.][0-9]+[,]?[ ]+[0-9]+[.][0-9]+')

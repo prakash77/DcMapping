@@ -23,8 +23,10 @@ $(document).ready(function(){
     
     var url=$('#city_select').attr("action");
     $.post(url, citySelected ,function(response_data){
+      console.log("Antriksh");
+      var dc_data = JSON.parse(response_data);
       $('#dc').autocomplete({
-               lookup: JSON.parse(response_data),
+               lookup: dc_data[0],
                onSelect: function (suggestion) {
                    console.log('You selected: ' + suggestion.value + ', ' + suggestion._id);
                }
