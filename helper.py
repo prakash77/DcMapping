@@ -12,16 +12,16 @@ def getCityList(state=None):
     client.close()
     return cityList
 
-def getDcData(city):
+def getDcData(dc_ids):
     dcData=[]
     client = MongoClient()
     db = client.dc
     acc = db.dc
-    if city == 'all cities':
+    if len(dc_ids) == acc.count():
         for a in acc.find({}):
             dcData.append(a)
     else:
-        for a in acc.find({'city':re.compile(r'^'+city+'$',re.IGNORECASE)}):
+        for a in acc.find({'_id':{'$in':dc_ids}}):
             dcData.append(a)
     client.close()
     return dcData
@@ -42,8 +42,14 @@ def getCityData(city):
 
 def getLocDCData(city):
     result = list()
-    result.append(getDcData(city))
+    dc_ids = []
     result.append(getCityData(city))
+    for row in result[0]:
+        dc_ids.append(row.get('rdc'))
+        if row['status'] == 2:
+            dc_ids.append(row['dc'])
+    dc_ids = list(set(dc_ids))
+    result = [getDcData(dc_ids)] + result
     return json.dumps(result)
 
 def latlngexists(strng):
