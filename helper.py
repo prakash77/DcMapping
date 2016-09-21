@@ -16,9 +16,13 @@ def getDcData(city):
     dcData=[]
     client = MongoClient()
     db = client.dc
-    acc = db.locality
-    for a in acc.find({'city':city}):
-        dcData.append(a)
+    acc = db.dc
+    if city == 'all cities':
+        for a in acc.find({}):
+            dcData.append(a)
+    else:
+        for a in acc.find({'city':re.compile(r'^'+city+'$',re.IGNORECASE)}):
+            dcData.append(a)
     client.close()
     dcData = json.dumps(dcData)
     return dcData

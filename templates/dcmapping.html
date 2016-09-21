@@ -8,6 +8,7 @@
         <div class="form-group">
            <select class="form-control" id="city" name="city">
             <option disabled selected>Select City</option>
+            <option >all cities</option>
             {% for city in cities %}
               <option>{{ city }}</option>
             {% endfor %}
@@ -18,7 +19,7 @@
     <div class="col-md-6">
       <form role="form" id="dc_search" name="dc_search" action="">
         <div class="form-group">
-           <input type="text" class="form-control" id="dc">
+           <input type="text" class="form-control" id="dc" name="dc" placeholder="Search DC">
         </div>
       </form>
     </div>

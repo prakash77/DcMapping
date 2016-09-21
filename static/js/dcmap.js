@@ -13,28 +13,24 @@ function initMap(){
   });
 }
 
-function fetch_data_from_city(city){
-  var data
-  var url=$('#city_select').attr("action");
-  $.post(url, city ,function(dc_data){
-    var d_obj = JSON.parse(dc_data);
-    console.log(d_obj);
-    });
-}
-
 $(document).ready(function(){
+
   //Select dc from city
   $( "#city" ).on('change',function() {
     var citySelected = $('#city option:selected').text();
+    
     localStorage.setItem("city",citySelected);
-    fetch_data_from_city(citySelected);
+    
+    var url=$('#city_select').attr("action");
+    $.post(url, citySelected ,function(response_data){
+      $('#dc').autocomplete({
+               lookup: JSON.parse(response_data),
+               onSelect: function (suggestion) {
+                   console.log('You selected: ' + suggestion.value + ', ' + suggestion._id);
+               }
+      });
+    });
   });
 
-  // $('#city').autocomplete({
-  //          lookup: data,
-  //          onSelect: function (suggestion) {
-  //              // alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-  //          }
-  //      });
 
 });
