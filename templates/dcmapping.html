@@ -3,7 +3,7 @@
 
 <div onload="initMap()" class="row">
   <div id= "selecters" class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
       <form role="form" id="city_select" action="{{ url_for('get_dc') }}" method= post >
         <div class="form-group">
            <select class="form-control" id="city" name="city">
@@ -16,7 +16,7 @@
         </div>
       </form>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-7">
       <form role="form" id="dc_search" name="dc_search" action="">
         <div class="form-group">
            <input type="text" class="form-control" id="dc" name="dc" placeholder="Search DC">
@@ -25,6 +25,7 @@
     </div>
   </div>
   <div id="gmap" class="gmaps"></div>
+  <div id="coord" class="coord"></div>
   <div id="legends" class="col-md-2">
     <ul class="list-group">
       <a id="legend_toggle" href="#legend-list" data-toggle="collapse"><li class="list-group-item" >LEGEND</li></a>

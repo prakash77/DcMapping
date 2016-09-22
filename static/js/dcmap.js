@@ -42,10 +42,18 @@ function initMap(){
     position: google.maps.ControlPosition.RIGHT_BOTTOM
     }
   });
+  //insert elements in google maps
+  var coordD = (document.getElementById('coord'));
+  gmap.controls[google.maps.ControlPosition.TOP_CENTER].push(coordD);
   var legends = (document.getElementById('legends'));
   gmap.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legends);
   var selecters = (document.getElementById('selecters'));
   gmap.controls[google.maps.ControlPosition.TOP_LEFT].push(selecters);
+
+  //mouse over coordinate event
+  gmap.addListener('mousemove',function(event){
+  coordD.innerHTML =  'Lat: ' + event.latLng.lat() + '<br/> Lng: ' + event.latLng.lng(); 
+  });
 }
 
 function load_marker(data){
@@ -96,7 +104,6 @@ function addLocalityMarker(position,icon,rec_id){
 }
 
 function addDCMarker(position,icon,rec_id){
-  // console.log(position);
   marker = new google.maps.Marker({
       position: position,
       icon: icon,
@@ -124,8 +131,10 @@ function OnclickDCMarker(rec_id){
           for (var j = 0; j <= locality_data.length-1; j++) {
             if((dc_data[rec_id]._id == locality_data[j].mdc | dc_data[rec_id]._id == locality_data[j].rdc) & Number(locality_data[j].lat)>1 ){
               //add points (needs to be done for each point, a foreach loop on the input array can be used.)
-              DC_convexHull.addPoint(Number(locality_data[j].lat),Number(locality_data[j].long));
-              if(dc_data[rec_id]._id == locality_data[j].rdc){
+              if(dc_data[rec_id]._id == locality_data[j].mdc & Number(locality_data[j].lat) != "" ){
+                DC_convexHull.addPoint(Number(locality_data[j].lat),Number(locality_data[j].long));
+              }
+              if(dc_data[rec_id]._id == locality_data[j].rdc & Number(locality_data[j].lat) != "" ){
                 RDC_convexHull.addPoint(Number(locality_data[j].lat),Number(locality_data[j].long));
               }
               DC2markerArray[count] = j
@@ -135,17 +144,24 @@ function OnclickDCMarker(rec_id){
           var DC_hullPoints = DC_convexHull.getHull();
           var RDC_hullPoints = RDC_convexHull.getHull();
           // convert each value to number in hullpoint array
-          var DC_result_array = []
-          for (var i = DC_hullPoints.length - 1; i >= 0; i--) {
-                DC_result_array[i] = new google.maps.LatLng(Number(DC_hullPoints[i].x),Number(DC_hullPoints[i].y));
+          var DC_result_array = [];
+          var RDC_result_array = [];
+          if(DC_hullPoints.length > 2){
+            for (var i = DC_hullPoints.length - 1; i >= 0; i--) {
+                  DC_result_array[i] = new google.maps.LatLng(Number(DC_hullPoints[i].x),Number(DC_hullPoints[i].y));
+            }
           }
-          var RDC_result_array = []
-          for (var i = RDC_hullPoints.length - 1; i >= 0; i--) {
-                RDC_result_array[i] = new google.maps.LatLng(Number(RDC_hullPoints[i].x),Number(RDC_hullPoints[i].y));
+          if(RDC_hullPoints.length > 2){  
+            for (var i = RDC_hullPoints.length - 1; i >= 0; i--) {
+                  RDC_result_array[i] = new google.maps.LatLng(Number(RDC_hullPoints[i].x),Number(RDC_hullPoints[i].y));
+            }
           }
           DC2markerArray[count] = rec_id;
-          CreatePolygone(DC_result_array,gmap,color='#FF0000',1);
-          CreatePolygone(RDC_result_array,gmap,color='#00FF00',2);
+
+          if(DC_result_array.length>0){ CreatePolygone(DC_result_array,gmap,color='#FF0000',1); }
+          else {alert('No Mapped Locality for selected DC');}
+          if(RDC_result_array.length>0){ CreatePolygone(RDC_result_array,gmap,color='#00FF00',2); }
+          else {alert('No Suggested Locality for selected DC');}
 }
 
 function OnclickLocalityMarker(rec_id){
@@ -222,31 +238,22 @@ function DeletePolygones(){
 
 //change color of those marker who fall in ploygon
 function HighlightConnectedMarker(){
-  // for (var i = 0; i < DC2markerArray.length - 1 ; i++) {
-  //   j=DC2markerArray[i];
-  //   markers[j].setIcon('http://www.mapdent.com/maps/icons/circle/blue.png');
-  //   markers[j].setZIndex(9999);
-  // }
-  // if(DC2markerArray.length-1 > 0){
-  //   j=DC2markerArray[DC2markerArray.length - 1];
-  //   markers[j].setIcon('https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red.png');
-  // }
       for(i = 0; i <= DC2markerArray.length - 1; i++){
         j=DC2markerArray[i];
-        if(locality_data[j].status == 2 ){
+        // if(locality_data[j].status == 2 ){
           if(locality_data[j].mdc == locality_data[j].rdc){
-            Localitymarkers[j].setIcon('http://www.mapdent.com/maps/icons/circle/blue.png');
+            if(Localitymarkers[j]){ Localitymarkers[j].setIcon('http://www.mapdent.com/maps/icons/circle/blue.png'); }
           }
           else if(locality_data[j].mdc != locality_data[j].rdc){
             k = DC2markerArray[DC2markerArray.length - 1];
             if(dc_data[k]._id == locality_data[j].mdc){
-                Localitymarkers[j].setIcon('http://www.mapdent.com/maps/icons/circle/brown.png');
+                if(Localitymarkers[j]){ Localitymarkers[j].setIcon('http://www.mapdent.com/maps/icons/circle/brown.png'); }
             }
             else{
-                Localitymarkers[j].setIcon('http://www.mapdent.com/maps/icons/circle/magenta.png');
+                if(Localitymarkers[j]){ Localitymarkers[j].setIcon('http://www.mapdent.com/maps/icons/circle/magenta.png'); }
             }
           }
-        }
+        // }
       }
       j=DC2markerArray[DC2markerArray.length - 1];
       DCmarkers[j].setIcon('https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red.png'); 
@@ -257,7 +264,11 @@ function ChangeMarkerColor(){
   for (var i = 0; i < DC2markerArray.length - 1 ; i++) {
     j=DC2markerArray[i];
     if(j){
-      Localitymarkers[j].setIcon('http://www.mapdent.com/maps/icons/circle/green.png');
+      var status = locality_data[j].status;
+      if(Number(status)==0){ Localitymarkers[j].setIcon('http://mw1.google.com/crisisresponse/icons/teal_dot.png'); }
+      else if(Number(status)==1){ Localitymarkers[j].setIcon('http://www.geocodezip.com/mapIcons/small_yellow_dot.png'); }
+      else if(Number(status)==2){ Localitymarkers[j].setIcon('http://www.mapdent.com/maps/icons/circle/green.png'); } 
+      // Localitymarkers[j].setIcon('http://www.mapdent.com/maps/icons/circle/green.png');
     }
   }
   if(DC2markerArray.length-1 > 0){
