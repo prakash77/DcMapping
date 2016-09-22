@@ -2,8 +2,8 @@
 {% block body %}
 
 <div onload="initMap()" class="row">
-  <div class="row">
-    <div class="col-md-6">
+  <div id= "selecters" class="row">
+    <div class="col-md-4">
       <form role="form" id="city_select" action="{{ url_for('get_dc') }}" method= post >
         <div class="form-group">
            <select class="form-control" id="city" name="city">
@@ -16,7 +16,7 @@
         </div>
       </form>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-8">
       <form role="form" id="dc_search" name="dc_search" action="">
         <div class="form-group">
            <input type="text" class="form-control" id="dc" name="dc" placeholder="Search DC">
@@ -25,7 +25,23 @@
     </div>
   </div>
   <div id="gmap" class="gmaps"></div>
-  <div id="legend"></div>
+  <div id="legends" class="col-md-2">
+    <ul class="list-group">
+      <a id="legend_toggle" href="#legend-list" data-toggle="collapse"><li class="list-group-item" >LEGEND</li></a>
+    </ul>
+    <div id="legend-list" class="collapse">
+        <ul class="list-group">
+          <li class="list-group-item"><span><img src='http://mw1.google.com/crisisresponse/icons/teal_dot.png'></span><strong> Loc</strong> Not Mapped</li>
+          <li class="list-group-item"><span><img src='http://www.geocodezip.com/mapIcons/small_yellow_dot.png'></span><strong> Loc</strong> Marked NSZ</li>
+          <li class="list-group-item"><span><img src='http://www.mapdent.com/maps/icons/circle/green.png'></span><strong> Loc</strong> Mapped</li>
+          <li class="list-group-item"><span><img src='http://www.mapdent.com/maps/icons/circle/blue.png'></span><strong> Loc</strong> No Recom.</li>
+          <li class="list-group-item"><span><img src='http://www.mapdent.com/maps/icons/circle/magenta.png'></span><strong> Loc</strong> Recom. Include</li>
+          <li class="list-group-item"><span><img src='http://www.mapdent.com/maps/icons/circle/brown.png'></span><strong> Loc</strong> Recom. Remove</li>
+          <li class="list-group-item"><span><img src='http://www.aialosangeles.org/images/map-dot.png'></span><strong> DC</strong></li>
+          <li class="list-group-item"><span><img src='https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red.png'></span><strong> DC</strong> Selected</li>
+          </ul>
+      </div>
+  </div>
 </div>
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX2OMtUkTnj8RnZyNq98wydvbP4DJfprA&callback=initMap"></script>

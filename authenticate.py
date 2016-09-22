@@ -1,7 +1,7 @@
 from functools import wraps
 from flask import request, Response
 
-users={"dq":["dq@dq",["all"]],"guest":["guest@dq",["rca","stats","home"]]}
+users={"dq":["dq@dq",["all"]]}
 
 def check_auth(username, password, access):
     """This function is called to check if a username /

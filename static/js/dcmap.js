@@ -42,6 +42,10 @@ function initMap(){
     position: google.maps.ControlPosition.RIGHT_BOTTOM
     }
   });
+  var legends = (document.getElementById('legends'));
+  gmap.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legends);
+  var selecters = (document.getElementById('selecters'));
+  gmap.controls[google.maps.ControlPosition.TOP_LEFT].push(selecters);
 }
 
 function load_marker(data){
@@ -124,7 +128,6 @@ function OnclickDCMarker(rec_id){
               if(dc_data[rec_id]._id == locality_data[j].rdc){
                 RDC_convexHull.addPoint(Number(locality_data[j].lat),Number(locality_data[j].long));
               }
-              // PolygonCoordinates[count] = new google.maps.LatLng(Number(data[j].LAT),Number(data[j].LONG));
               DC2markerArray[count] = j
               count = count + 1;
             }
@@ -141,8 +144,8 @@ function OnclickDCMarker(rec_id){
                 RDC_result_array[i] = new google.maps.LatLng(Number(RDC_hullPoints[i].x),Number(RDC_hullPoints[i].y));
           }
           DC2markerArray[count] = rec_id;
-          CreatePolygone(DC_result_array,gmap,color='#FF0000');
-          CreatePolygone(RDC_result_array,gmap,color='#0000FF');
+          CreatePolygone(DC_result_array,gmap,color='#FF0000',1);
+          CreatePolygone(RDC_result_array,gmap,color='#00FF00',2);
 }
 
 function OnclickLocalityMarker(rec_id){
@@ -193,13 +196,13 @@ function DeletePolyLines(){
   }
 }
 
-function CreatePolygone(PolygonCoordinate,map,color){
+function CreatePolygone(PolygonCoordinate,map,color,stroke){
 // Construct the polygon.
   MapPolygon = new google.maps.Polygon({
     paths: PolygonCoordinate,
-    strokeColor: '#FF0000',
-    strokeOpacity: 0.5,
-    strokeWeight: 1,
+    strokeColor: color,
+    strokeOpacity: 0.8,
+    strokeWeight: stroke,
     fillColor: color,
     fillOpacity: 0.1
   });
