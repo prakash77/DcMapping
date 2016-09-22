@@ -156,7 +156,7 @@ function OnclickDCMarker(rec_id){
                   RDC_result_array[i] = new google.maps.LatLng(Number(RDC_hullPoints[i].x),Number(RDC_hullPoints[i].y));
             }
           }
-          DC2markerArray[count] = rec_id
+          DC2markerArray[count] = rec_id;
           if(DC_result_array.length>0){ CreatePolygone(DC_result_array,gmap,color='#FF0000',1); }
           else {alert('No Mapped Locality for selected DC');}
           if(RDC_result_array.length>0){ CreatePolygone(RDC_result_array,gmap,color='#00FF00',2); }
@@ -262,7 +262,7 @@ function HighlightConnectedMarker(){
 function ChangeMarkerColor(){
   for (var i = 0; i < DC2markerArray.length - 1 ; i++) {
     j=DC2markerArray[i];
-    if(j){
+    if(j>=0){
       var status = locality_data[j].status;
       if(Number(status)==0){ Localitymarkers[j].setIcon('http://mw1.google.com/crisisresponse/icons/teal_dot.png'); }
       else if(Number(status)==1){ Localitymarkers[j].setIcon('http://www.geocodezip.com/mapIcons/small_yellow_dot.png'); }
@@ -272,7 +272,7 @@ function ChangeMarkerColor(){
   }
   if(DC2markerArray.length-1 > 0){
     j=DC2markerArray[DC2markerArray.length - 1];
-    if(j){
+    if(j>=0){
       DCmarkers[j].setIcon('http://www.aialosangeles.org/images/map-dot.png');
     }
   }
