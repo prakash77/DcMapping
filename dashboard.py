@@ -7,7 +7,7 @@ app.secret_key = 'prakash'
 
 @app.route('/dashboard/')
 def index():
-    return redirect(url_for('dcmap')
+    return redirect(url_for('dcmap'))
 
 @app.route('/dashboard/dcmap')
 @requires_auth
