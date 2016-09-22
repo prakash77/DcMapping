@@ -1,10 +1,11 @@
 import requests, re, json, os, csv
 from flask import flash
 from pymongo import MongoClient
+from constant import MONGO_CLIENT,REPLICA_SET
 
 def getCityList(state=None):
     cityList=[]
-    client = MongoClient('10.0.21.13',replicaset='rs0')
+    client = MongoClient(MONGO_CLIENT,replicaset=REPLICA_SET)
     db = client.dc
     acc = db.locality
     if not state:
@@ -14,7 +15,7 @@ def getCityList(state=None):
 
 def getDcData(dc_ids):
     dcData=[]
-    client = MongoClient('10.0.21.13',replicaset='rs0')
+    client = MongoClient(MONGO_CLIENT,replicaset=REPLICA_SET)
     db = client.dc
     acc = db.dc
     if len(dc_ids) == acc.count():
@@ -28,7 +29,7 @@ def getDcData(dc_ids):
 
 def getCityData(city):
     cityData=[]
-    client = MongoClient('10.0.21.13',replicaset='rs0')
+    client = MongoClient(MONGO_CLIENT,replicaset=REPLICA_SET)
     db = client.dc
     acc = db.locality
     if city == 'all cities':
