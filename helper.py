@@ -47,7 +47,7 @@ def getLocDCData(city):
     for row in result[0]:
         dc_ids.append(row.get('rdc'))
         if row['status'] == 2:
-            dc_ids.append(row['dc'])
+            dc_ids.append(row['mdc'])
     dc_ids = list(set(dc_ids))
     result = [getDcData(dc_ids)] + result
     return json.dumps(result)
