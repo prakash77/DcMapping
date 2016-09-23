@@ -35,7 +35,7 @@
 
 body{
 	padding-top: 51px;
-	padding-bottom: 10px;
+	/*padding-bottom: 0px;*/
 }
 
 .bg-grey{
@@ -49,7 +49,7 @@ body{
 }
 
 .gmaps{
-	height: 580px;
+  height: auto;
 }
 
 .coord{

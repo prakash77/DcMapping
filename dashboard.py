@@ -10,7 +10,7 @@ def index():
     return redirect(url_for('dcmap'))
 
 @app.route('/dashboard/dcmap')
-# @requires_auth
+@requires_auth
 def dcmap():
     cities = helper.getCityList()
     cities.sort()

@@ -41,16 +41,10 @@
 
 <!-- Show flashed messages -->
 <div id="flashMessages">
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    {% for category, message in messages %}
-      <div id="nameAlert" class="alert alert-{{ category }} alert-dismissible" role="alert">
+      <div id="nameAlert" class="alert alert-warning alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>{{category}}: </strong> {{ message }}
+        <strong>Alert! </strong> <p id = "alertMessage"></p>
       </div>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
 </div>
 
 <!-- navigation bar -->
