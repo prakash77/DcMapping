@@ -63,8 +63,8 @@ body{
 	color: #eee;
 	padding: 5px;
 	opacity: 0.6;
-	/*border-bottom-right-radius: 5px;*/
-	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 25px;
+	/*border-bottom-left-radius: 25px;*/
 	min-width: 15%;
 	text-align: center;
 }
