@@ -5,17 +5,26 @@
   <div id= "selecters">
     
     <div class="row">
-      <form role="form" id="city_select" action="{{ url_for('get_dc') }}" method= post >
-        <div class="form-group">
-           <select class="form-control" id="city" name="city">
-            <option disabled selected>Select City</option>
-            <option >all cities</option>
-            {% for city in cities %}
-              <option>{{ city }}</option>
-            {% endfor %}
-          </select>    
-        </div>
-      </form>
+      <div class="col-md-5">
+        <form role="form" id="city_select" action="{{ url_for('get_dc') }}" method= post >
+          <div class="form-group">
+             <select class="form-control" id="city" name="city">
+              <option disabled selected>Select City</option>
+              <option >all cities</option>
+              {% for city in cities %}
+                <option>{{ city }}</option>
+              {% endfor %}
+            </select>    
+          </div>
+        </form>
+      </div>
+      <div class="col-md-7">
+       <form role="form" id="locality_search" name="loocality_search" action="">
+         <div class="form-group">
+            <input type="text" class="form-control" id="locality" name="locality" placeholder="Search locality">
+         </div>
+       </form>
+     </div>
     </div>
     
     <div class="row">
